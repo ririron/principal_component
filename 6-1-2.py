@@ -3,10 +3,11 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 def normalization(array, aveX, aveY):
-    array[:,0] = array[:,0] - aveX
-    array[:,1] = array[:,1] - aveY
+    n_array = array
+    n_array[:,0] = array[:,0] - aveX
+    n_array[:,1] = array[:,1] - aveY
 
-    return array
+
 
 def ave(array):
     a_x = 0.0
@@ -47,15 +48,15 @@ lam, pro_v = np.linalg.eig(V)
 print("eigen_value:", lam)
 print("proper_vector:", pro_v)
 
-n_array = normalization(array, aveX, aveY)
 
-x = np.arange(-100, 100, 1)
+normalization(array, aveX, aveY)
 
 plt.gca().set_aspect('equal', adjustable='box')
-plt.xlim([-30, 30])
-plt.ylim([-30, 30])
-plt.plot(n_array[:,0], n_array[:,1], "o")
-plt.plot(x*pro_v[0][0], x*pro_v[1][0], linestyle="dashed")
-plt.plot(x*pro_v[0][1], x*pro_v[1][1], linestyle="dashed")
+plt.xlim([-20, 20])
+plt.ylim([-20, 20])
+plt.plot(array[:,0], array[:,1], "o")
+plt.plot(array[:,0]*pro_v[0][0], array[:,0]*pro_v[1][0], color='r', linestyle="solid", label="ξa")
+plt.plot(array[:,0]*pro_v[0][1], array[:,0]*pro_v[1][1], color='g', linestyle="solid", label="ηa")
 
+plt.legend()
 plt.show()
